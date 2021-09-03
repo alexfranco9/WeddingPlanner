@@ -1,0 +1,55 @@
+@model User
+<br>
+
+<h1>Welcome to the Wedding Planner, @ViewBag.LoggedUser.FirstName @ViewBag.LoggedUser.LastName</h1>
+
+<div class="col text-right">
+    <a href="/logout" class="btn btn-danger">Log out</a>
+</div>
+<br>
+<hr>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Wedding</th>
+            <th scope="col">Date</th>
+            <th scope="col">Guests</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (Wedding wed in @ViewBag.AllWeddings)
+            {
+                <tr>
+                    <td><a href="viewwedding/@wed.WeddingId">@wed.WedderOne and @wed.WedderTwo</a></td>
+                    <td>@wed.WeddingDate.ToString("MMMM dd, yyyy")</td>
+                    <td>@wed.Guests.Count</td> 
+                    <td class="text-center">
+                    @if (@ViewBag.LoggedUser.UserId == @wed.UserId)
+                    {
+                        <a class="btn btn-danger" href="/wedding/@wed.WeddingId/delete">Delete</a>
+                    }
+                    else
+                    {
+                        if(wed.Guests.Any(r => r.UserId == ViewBag.LoggedUser.UserId))
+                        {
+                            <a href="unRSVP/@wed.WeddingId" class="btn btn-primary">UNRSVP</a>
+                        }
+                        else{
+                            <a href="RSVP/@wed.WeddingId" class="btn btn-primary">RSVP</a>
+                        }
+                    }
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td colspan="4" class="text-right">
+                <a href="/wedding/new" role="button" class="btn btn-primary">New Wedding</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+

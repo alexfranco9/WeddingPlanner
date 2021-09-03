@@ -1,0 +1,33 @@
+@model Wedding
+
+<br>
+
+<div>
+    <div>
+        <div>
+            <h1> The Wedding of @ViewBag.SingleWedding.WedderOne and @ViewBag.SingleWedding.WedderTwo </h1>
+            <br>
+            <h4>Wedding Date: @ViewBag.SingleWedding.WeddingDate.ToString("MMMM dd, yyyy")</h4>
+        </div>
+
+        <div class="col text-right">
+            <a href="/dashboard" role="button" class="btn btn-primary mr-2">Dashboard</a>
+            <a href="/logout" role="button" class="btn btn-secondary">Log out</a>
+        </div>
+    </div>
+    <hr>
+    <h4 class="ml-3 mb-3">Wedding Location: @ViewBag.SingleWedding.Street, @ViewBag.SingleWedding.City, @ViewBag.SingleWedding.State @ViewBag.SingleWedding.Zip</h4>
+    <div class="container">
+        <div>
+            <h3>Wedding Guests:</h3>
+            <div>
+                @foreach (RSVP wed in ViewBag.SingleWedding.Guests)
+                {
+                <ul>
+                    <li>@wed.User.FirstName @wed.User.LastName</li>
+                </ul>
+                }
+            </div>
+        </div>
+    </div>
+</div>
